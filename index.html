@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ransomware Defense</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="game-shell">
+      <header class="top-bar">
+        <div>
+          <h1>Ransomware Defense</h1>
+          <p>Protect the company server with practical computer security defenses.</p>
+        </div>
+        <div class="top-actions">
+          <button id="soundBtn" class="restart-btn" aria-pressed="true">Sound: On</button>
+          <button id="restartBtn" class="restart-btn">Restart</button>
+        </div>
+      </header>
+
+      <section class="status-panel">
+        <div><span>Security Points</span><strong id="pointsDisplay">50</strong></div>
+        <div><span>Your Money</span><strong id="moneyDisplay">RM10,000</strong></div>
+        <div><span>Stage</span><strong id="stageDisplay">1 / 3</strong></div>
+        <div><span>Time Left</span><strong id="timeDisplay">02:00</strong></div>
+      </section>
+
+      <div class="game-layout">
+        <aside class="guide-panel">
+          <div class="guide-heading">
+            <button class="tool-btn" data-type="remove" aria-label="Remove defender" title="Remove defender">🪏</button>
+            <h2>Defenders</h2>
+          </div>
+          <button class="defender-btn selected" data-type="backup">
+            <span class="icon">💾</span><span><b>Backup Defender</b><small>50 SP · 25 damage · steady</small></span>
+          </button>
+          <button class="defender-btn" data-type="firewall">
+            <span class="icon">🛡️</span><span><b>Firewall Defender</b><small>75 SP · 20 damage · freezes</small></span>
+          </button>
+          <button class="defender-btn" data-type="antivirus">
+            <span class="icon">🧪</span><span><b>Antivirus Defender</b><small>100 SP · 40 damage · rapid</small></span>
+          </button>
+          <button class="defender-btn" data-type="email">
+            <span class="icon">📧</span><span><b>Email Filter</b><small>50 SP · 15 damage · slows</small></span>
+          </button>
+          <button class="defender-btn" data-type="boom">
+            <span class="icon">💥</span><span><b>Three-Box Bomb</b><small>200 SP · clears 3 nearby boxes</small></span>
+          </button>
+        </aside>
+
+        <section class="play-column">
+          <div class="battle-wrap">
+            <div class="server-column"><div class="server">🖥️<span>SERVER</span></div></div>
+            <div id="battlefield" class="battlefield" aria-label="5 by 8 battlefield grid"></div>
+          </div>
+          <div id="message" class="message">Choose a defender, then click an empty grid cell.</div>
+        </section>
+
+        <aside class="question-panel">
+          <div>
+            <div class="question-heading">
+              <span class="panel-label">SECURITY TRAINING</span>
+              <strong id="questionTimer" class="question-timer">30s</strong>
+            </div>
+            <h2 id="questionCategory">Stage 1 · Security Basics</h2>
+            <p id="questionText">A question will appear soon. Correct answers give +50 Security Points.</p>
+            <div id="answers" class="answers"></div>
+          </div>
+          <div class="how-to">
+            <h3>How to play</h3>
+            <p>1. Answer to earn SP.</p>
+            <p>2. Choose a defender.</p>
+            <p>3. Place it in an enemy lane.</p>
+            <p>4. Clear all viruses.</p>
+            <h3 class="enemy-title">Threat guide</h3>
+            <p>Five threat classes grow stronger each stage.</p>
+            <p>Normal · fast · tank · attacker · gang</p>
+            <p>The Heavy Encryptor costs RM2,000 if it gets through.</p>
+          </div>
+        </aside>
+      </div>
+
+      <section id="startScreen" class="start-screen">
+        <div class="start-dialog">
+          <span class="panel-label">COMPUTER SECURITY TRAINING GAME</span>
+          <h2>Ransomware Defense</h2>
+          <p class="intro">This game plays like Plants vs. Zombies: threats advance from the right while you build defenses to protect the company server.</p>
+          <div class="start-guide">
+            <div><b>1. Answer</b><span>Correct answers earn +50 Security Points.</span></div>
+            <div><b>2. Choose</b><span>Select a defense from the left panel.</span></div>
+            <div><b>3. Place</b><span>Click an empty box in the enemy's row.</span></div>
+            <div><b>4. Protect</b><span>Wrong or missed answers earn no SP, but do not lose money.</span></div>
+          </div>
+          <div class="stage-preview">
+            <span>Stage 1<br /><small>Security basics</small></span>
+            <span>Stage 2<br /><small>Spot threats</small></span>
+            <span>Stage 3<br /><small>Incident response</small></span>
+          </div>
+          <label class="player-field">
+            <span>Player name or ID</span>
+            <input id="playerNameInput" type="text" maxlength="40" placeholder="Example: Student 01" />
+          </label>
+          <p class="data-note">When hosted, your result is sent to the game owner. A local CSV backup is also available.</p>
+          <p class="wave-note">Warning: every stage ends with a 15-second virus wave.</p>
+          <button id="startBtn" class="start-btn">Start Defense</button>
+        </div>
+      </section>
+
+      <section id="resultScreen" class="result-screen hidden" aria-labelledby="resultTitle">
+        <div class="result-dialog">
+          <span id="resultIcon" class="result-icon">🏆</span>
+          <span id="resultLabel" class="panel-label">COMPANY NETWORK SECURED</span>
+          <h2 id="resultTitle">Congratulations!</h2>
+          <p id="resultSummary">You cleared every remaining threat and protected the company.</p>
+          <p id="recordStatus" class="record-status">Preparing game record...</p>
+          <div class="result-actions">
+            <button id="reviewBtn" class="review-btn">Review Mistakes</button>
+            <button id="downloadRecordBtn" class="review-btn">Download Record</button>
+            <button id="playAgainBtn" class="start-btn">Play Again</button>
+          </div>
+          <div id="reviewPanel" class="review-panel hidden">
+            <h3>Your Question Review</h3>
+            <div id="reviewList"></div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <audio id="backgroundMusic" src="background-music.mp3" loop preload="auto"></audio>
+    <script src="script.js"></script>
+  </body>
+</html>
