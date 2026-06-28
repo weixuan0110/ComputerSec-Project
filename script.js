@@ -145,6 +145,10 @@ document.getElementById("soundBtn").addEventListener("click", toggleSound);
 document.getElementById("reviewBtn").addEventListener("click", toggleReview);
 document.getElementById("playAgainBtn").addEventListener("click", startGame);
 document.getElementById("downloadRecordBtn").addEventListener("click", downloadCurrentRecord);
+document.getElementById("closeLeaderboardBtn").addEventListener("click", closeLeaderboard);
+document.querySelectorAll(".leaderboard-open").forEach((button) => {
+  button.addEventListener("click", openLeaderboard);
+});
 
 document.querySelectorAll(".defender-btn, .tool-btn").forEach((button) => {
   button.addEventListener("click", () => selectDefender(button.dataset.type));
@@ -202,6 +206,7 @@ function startGame() {
   document.getElementById("startScreen").classList.remove("hidden");
   document.getElementById("resultScreen").classList.add("hidden");
   document.getElementById("resultScreen").classList.remove("lost");
+  document.getElementById("leaderboardScreen").classList.add("hidden");
   document.getElementById("reviewPanel").classList.add("hidden");
   document.getElementById("reviewBtn").textContent = "Review Mistakes";
 }
@@ -734,6 +739,49 @@ function downloadCurrentRecord() {
   link.download = `ransomware-defense-${playerName.replace(/[^a-z0-9]+/gi, "-").toLowerCase() || "player"}.csv`;
   link.click();
   URL.revokeObjectURL(link.href);
+}
+
+async function openLeaderboard() {
+  const screen = document.getElementById("leaderboardScreen");
+  const body = document.getElementById("leaderboardBody");
+  screen.classList.remove("hidden");
+  body.innerHTML = '<tr><td colspan="6">Loading leaderboard...</td></tr>';
+
+  try {
+    const response = await fetch("/api/leaderboard");
+    if (!response.ok) throw new Error("Leaderboard unavailable");
+    const data = await response.json();
+    if (!data.leaderboard.length) {
+      body.innerHTML = '<tr><td colspan="6">No winning records yet. Be the first!</td></tr>';
+      return;
+    }
+
+    body.innerHTML = "";
+    data.leaderboard.forEach((entry) => {
+      const row = document.createElement("tr");
+      const minutes = Math.floor(entry.durationSeconds / 60);
+      const seconds = String(entry.durationSeconds % 60).padStart(2, "0");
+      [
+        `#${entry.rank}`,
+        entry.playerName,
+        `RM${entry.remainingMoney.toLocaleString()}`,
+        entry.securityPoints,
+        entry.mistakes,
+        `${minutes}:${seconds}`
+      ].forEach((value) => {
+        const cell = document.createElement("td");
+        cell.textContent = value;
+        row.appendChild(cell);
+      });
+      body.appendChild(row);
+    });
+  } catch {
+    body.innerHTML = '<tr><td colspan="6">Leaderboard could not be loaded. Please try again.</td></tr>';
+  }
+}
+
+function closeLeaderboard() {
+  document.getElementById("leaderboardScreen").classList.add("hidden");
 }
 
 function recordMistake(item, selectedAnswer) {

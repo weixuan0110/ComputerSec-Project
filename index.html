@@ -14,6 +14,7 @@
           <p>Protect the company server with practical computer security defenses.</p>
         </div>
         <div class="top-actions">
+          <button class="restart-btn leaderboard-open">Leaderboard</button>
           <button id="soundBtn" class="restart-btn" aria-pressed="true">Sound: On</button>
           <button id="restartBtn" class="restart-btn">Restart</button>
         </div>
@@ -103,7 +104,10 @@
           </label>
           <p class="data-note">When hosted, your result is sent to the game owner. A local CSV backup is also available.</p>
           <p class="wave-note">Warning: every stage ends with a 15-second virus wave.</p>
-          <button id="startBtn" class="start-btn">Start Defense</button>
+          <div class="start-actions">
+            <button id="startBtn" class="start-btn">Start Defense</button>
+            <button class="review-btn leaderboard-open">View Leaderboard</button>
+          </div>
         </div>
       </section>
 
@@ -117,12 +121,40 @@
           <div class="result-actions">
             <button id="reviewBtn" class="review-btn">Review Mistakes</button>
             <button id="downloadRecordBtn" class="review-btn">Download Record</button>
+            <button class="review-btn leaderboard-open">Leaderboard</button>
             <button id="playAgainBtn" class="start-btn">Play Again</button>
           </div>
           <div id="reviewPanel" class="review-panel hidden">
             <h3>Your Question Review</h3>
             <div id="reviewList"></div>
           </div>
+        </div>
+      </section>
+
+      <section id="leaderboardScreen" class="result-screen hidden" aria-labelledby="leaderboardTitle">
+        <div class="result-dialog leaderboard-dialog">
+          <span class="result-icon">🏅</span>
+          <span class="panel-label">BEST DEFENSE TEAMS</span>
+          <h2 id="leaderboardTitle">Leaderboard</h2>
+          <p>Ranked by money, SP, fewer mistakes, then completion time.</p>
+          <div class="leaderboard-table-wrap">
+            <table class="leaderboard-table">
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Player</th>
+                  <th>Money</th>
+                  <th>SP</th>
+                  <th>Mistakes</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody id="leaderboardBody">
+                <tr><td colspan="6">Loading leaderboard...</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <button id="closeLeaderboardBtn" class="start-btn">Close Leaderboard</button>
         </div>
       </section>
 
